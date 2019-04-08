@@ -5,7 +5,8 @@ module.exports = {
       script: "./index.js",
       env: {
         NODE_ENV: "development",
-        SECRET: "testtesttest"
+        SECRET: "",
+        PROJECTS_ROOT: "/"
       }
     }
   ]

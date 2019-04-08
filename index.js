@@ -7,7 +7,8 @@ const hostname = "localhost";
 const port = 3000;
 
 const server = http.createServer((req, res) => {
-  const { repo } = url.parse(req.url, true).query;
+  const { path, repo } = url.parse(req.url, true).query;
+
   req.on("data", function(chunk) {
     const sig =
       "sha1=" +
@@ -17,14 +18,12 @@ const server = http.createServer((req, res) => {
         .digest("hex");
 
     if (req.headers["x-hub-signature"] == sig) {
-      console.log("repo", repo);
-      exec("cd " + repo + " && git pull");
+      exec("cd " + process.env.PROJECTS_ROOT + path + repo + " && git pull");
     }
   });
 
   res.statusCode = 200;
   res.setHeader("Content-Type", "text/plain");
-  res.end("Hello World!\n");
 });
 
 server.listen(port, hostname, () => {
