@@ -7,7 +7,7 @@ const hostname = "localhost";
 const port = 3000;
 
 const server = http.createServer((req, res) => {
-  const { repo } = url.parse(request.url, true).query;
+  const { repo } = url.parse(req.url, true).query;
   req.on("data", function(chunk) {
     const sig =
       "sha1=" +
