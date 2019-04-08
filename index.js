@@ -1,15 +1,14 @@
 const http = require("http");
+const url = require("url");
 const crypto = require("crypto");
 const exec = require("child_process").exec;
 
 const hostname = "localhost";
 const port = 3000;
-const repo = "~/your_repo_path_here/";
 
 const server = http.createServer((req, res) => {
+  const { repo } = url.parse(request.url, true).query;
   req.on("data", function(chunk) {
-    console.log("process.env.SECRET", process.env.SECRET);
-
     const sig =
       "sha1=" +
       crypto
@@ -18,6 +17,7 @@ const server = http.createServer((req, res) => {
         .digest("hex");
 
     if (req.headers["x-hub-signature"] == sig) {
+      console.log("repo", repo);
       exec("cd " + repo + " && git pull");
     }
   });
