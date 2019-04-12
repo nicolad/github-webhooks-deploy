@@ -18,7 +18,7 @@ const server = http.createServer((req, res) => {
         .digest("hex");
 
     if (req.headers["x-hub-signature"] == sig) {
-      exec("cd " + process.env.PROJECTS_ROOT + path + repo + " && git pull");
+      exec("cd " + path + " && git pull");
     }
   });
 
